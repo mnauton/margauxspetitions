@@ -13,4 +13,38 @@ public class PetitionService {
     public PetitionService() {
         this.petitions = new ArrayList<>();
     }
+
+    // Add a new petition
+    public void createPetition(String title, String description) {
+        petitions.add(new Petition(title, description));
+    }
+
+    // Get all petitions
+    public List<Petition> getAllPetitions() {
+        return petitions;
+    }
+
+    // Search for a petition by title
+    public Petition searchPetitionByTitle(String title) {
+        return petitions.stream()
+                .filter(p -> p.getTitle().equalsIgnoreCase(title))
+                .findFirst()
+                .orElse(null);
+    }
+
+    // Get a specific petition by ID
+    public Petition getPetitionById(int id) {
+        return petitions.stream()
+                .filter(p -> p.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    // Add a signature to a petition
+    public void signPetition(int id, String name, String email) {
+        Petition petition = getPetitionById(id);
+        if (petition != null) {
+            petition.addSignature(name, email);
+        }
+    }
 }
