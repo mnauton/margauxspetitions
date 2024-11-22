@@ -29,4 +29,17 @@ public class PetitionController {
         model.addAttribute("petitions", petitionService.getAllPetitions());
         return "petition/all";
     }
+
+    // Form for Creating a Petition
+    @GetMapping("/create")
+    public String petitionCreationForm() {
+        return "petition/create";
+    }
+
+    // Create a Petition
+    @PostMapping("/create")
+    public String createPetition(@RequestParam String title, @RequestParam String description) {
+        petitionService.createPetition(title, description);
+        return "redirect:/petitions/all";
+    }
 }
