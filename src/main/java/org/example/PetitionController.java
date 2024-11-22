@@ -42,4 +42,19 @@ public class PetitionController {
         petitionService.createPetition(title, description);
         return "redirect:/petitions/all";
     }
+
+    // View a specific petition by ID
+    @GetMapping("/{id}")
+    public String viewPetition(@PathVariable int id, Model model) {
+        Petition petition = petitionService.getPetitionById(id);
+        model.addAttribute("petition", petition);
+        return "petition/view";
+    }
+
+    // Sign a petition
+    @PostMapping("/{id}/sign")
+    public String signPetition(@PathVariable int id, @RequestParam String name, @RequestParam String email) {
+        petitionService.signPetition(id, name, email);
+        return "redirect:/petitions/" + id;
+    }
 }

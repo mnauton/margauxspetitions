@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Petition</title>
+</head>
+<body>
+<h1>View Petition</h1>
+<div th:if="${petition != null}">
+    <p><strong>Title:</strong> <span th:text="${petition.title}"></span></p>
+    <p><strong>Description:</strong> <span th:text="${petition.description}"></span></p>
+    <h2>Signatures:</h2>
+    <ul>
+        <li th:each="signature : ${petition.signatures}" th:text="${signature}"></li>
+    </ul>
+    <h2>Sign this petition:</h2>
+    <form th:action="@{/petitions/{id}/sign(id=${petition.id})}" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+        <button type="submit">Sign</button>
+    </form>
+</div>
+<div th:if="${petition == null}">
+    <p>Petition not found.</p>
+</div>
+<a href="/petitions/all">Back to All Petitions</a>
+</body>
+</html>
