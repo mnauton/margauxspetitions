@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+<h1>Search Results</h1>
+<div th:if="${petition != null}">
+    <p><strong>Title:</strong> <span th:text="${petition.title}"></span></p>
+    <a th:href="@{/petitions/{id}(id=${petition.id})}">View and Sign Petition</a>
+</div>
+<div th:if="${petition == null}">
+    <p>No petition found with the given title.</p>
+</div>
+<a href="/petitions/all">Back to All Petitions</a>
+<a href="/petitions/search">Back to Search</a>
+</body>
+</html>

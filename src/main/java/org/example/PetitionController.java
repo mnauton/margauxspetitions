@@ -57,4 +57,18 @@ public class PetitionController {
         petitionService.signPetition(id, name, email);
         return "redirect:/petitions/" + id;
     }
+
+    // Form for searching petitions
+    @GetMapping("/search")
+    public String showSearchForm() {
+        return "petition/search";
+    }
+
+    // Search petition by title
+    @GetMapping("/search-result")
+    public String searchPetition(@RequestParam String title, Model model) {
+        Petition petition = petitionService.searchPetitionByTitle(title);
+        model.addAttribute("petition", petition);
+        return "petition/result";
+    }
 }
