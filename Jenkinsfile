@@ -9,14 +9,25 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh "mvn clean:clean"
+                sh "mvn clean"
                 sh "mvn dependency:copy-dependencies"
-                sh "mvn compiler:compile"
+                sh "mvn compile"
             }
         }
-        stage('Exec') {
+        stage('Package') {
             steps {
-                sh "mvn exec:java"
+                sh "mvn package"
+            }
+        }
+        stage('Archive') {
+            steps {
+                    archiveArtifacts allowEmptyArchive: true,
+                        artifacts: '**/margauxspetitions.war'
+            }
+        }
+        stage('Deploy') {
+            steps {
+               sh 'docker build -f Dockerfile -t myapp .'
             }
         }
     }
