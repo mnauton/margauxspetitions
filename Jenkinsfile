@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh "mvn clean"
+                sh "mvn clean:clean"
                 sh "mvn dependency:copy-dependencies"
                 sh "mvn compile"
             }
@@ -29,7 +29,7 @@ pipeline {
             steps {
                sh 'docker build -f Dockerfile -t myapp .'
                sh 'docker rm -f myapp || true'
-               sh 'docker run --name myapp -p 8081:9090 --detach myapp:latest'
+               sh 'docker run --name myapp -p 8081:8080 --detach myapp:latest'
             }
         }
     }
