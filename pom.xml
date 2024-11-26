@@ -13,6 +13,8 @@
     <artifactId>margauxspetitions</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
+    <name>margauxspetitions</name>
+    <description>Petitions project</description>
 
     <properties>
         <java.version>17</java.version>
