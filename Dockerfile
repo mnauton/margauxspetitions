@@ -5,6 +5,6 @@ RUN mv /usr/local/tomcat/webapps.dist /usr/local/tomcat/webapps
 
 COPY target/*.war /usr/local/tomcat/webapps/
 
-EXPOSE 8082
+EXPOSE 9090
 
 CMD ["catalina.sh", "run"]
