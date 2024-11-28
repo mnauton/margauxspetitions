@@ -29,7 +29,7 @@ pipeline {
             steps {
                sh 'docker build -f Dockerfile -t myapp .'
                sh 'docker rm -f myapp || true'
-               sh 'docker run --name myapp -p 8081:8082 --detach myapp:latest'
+               sh 'docker run --name myapp -p 8082:8080 --detach myapp:latest'
             }
         }
     }
