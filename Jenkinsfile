@@ -25,6 +25,9 @@ pipeline {
                         artifacts: '**/margauxspetitions.war'
             }
         }
+        parameters {
+            string(name: 'USERNAME')
+        }
         stage('Deploy') {
             steps {
                sh 'docker build -f Dockerfile -t myapp .'
