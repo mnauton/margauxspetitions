@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'USERNAME', defaultValue: '', description: 'Username for deployment')
+    }
+
     stages {
         stage('GetProject') {
             steps {
@@ -24,9 +28,6 @@ pipeline {
                 archiveArtifacts allowEmptyArchive: true,
                     artifacts: '**/margauxspetitions.war'
             }
-        }
-        parameters {
-            string(name: 'USERNAME')
         }
         stage('Deploy') {
             steps {
