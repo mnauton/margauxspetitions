@@ -52,11 +52,12 @@ class PetitionServiceTest {
         petitionService.createPetition("Save the Planet", "A petition to save the Earth.");
 
         // Act
-        Petition petition = petitionService.searchPetitionByTitle("Save the Planet");
+        List<Petition> results = petitionService.searchPetitionByTitle("Save the Planet");
 
         // Assert
-        assertNotNull(petition, "Petition should be found.");
-        assertEquals("Save the Planet", petition.getTitle(), "The title should match.");
+        assertFalse(results.isEmpty(), "Petition should be found.");
+        assertEquals(1, results.size(), "There should be exactly one matching petition.");
+        assertEquals("Save the Planet", results.get(0).getTitle(), "The title should match.");
     }
 
     @Test
@@ -65,11 +66,12 @@ class PetitionServiceTest {
         petitionService.createPetition("Save the Planet", "A petition to save the Earth.");
 
         // Act
-        Petition petition = petitionService.searchPetitionByTitle("Save the Forest");
+        List<Petition> results = petitionService.searchPetitionByTitle("Save the Forest");
 
         // Assert
-        assertNull(petition, "Petition should not be found.");
+        assertTrue(results.isEmpty(), "No petition should be found.");
     }
+
 
     @Test
     void testGetPetitionById_Found() {
@@ -144,4 +146,50 @@ class PetitionServiceTest {
         assertEquals(title2, petitionService.getAllPetitions().get(1).getTitle(), "Second title should match.");
     }
 
+    @Test
+    void testSearchPetitionByTitle_SubstringMatch_Found() {
+        // Arrange
+        petitionService.createPetition("Save the Rainforest", "A petition to save the rainforest.");
+        petitionService.createPetition("Save the Ocean", "A petition to protect the oceans.");
+        petitionService.createPetition("Protect the Wetlands", "A petition to preserve wetlands.");
+
+        // Act
+        List<Petition> results = petitionService.searchPetitionByTitle("Save");
+
+        // Assert
+        assertEquals(2, results.size(), "There should be two petitions matching the substring 'Save'.");
+        assertTrue(results.stream().anyMatch(p -> p.getTitle().equals("Save the Rainforest")),
+                "The 'Save the Rainforest' petition should match.");
+        assertTrue(results.stream().anyMatch(p -> p.getTitle().equals("Save the Ocean")),
+                "The 'Save the Ocean' petition should match.");
+    }
+
+    @Test
+    void testSearchPetitionByTitle_SubstringMatch_CaseInsensitive() {
+        // Arrange
+        petitionService.createPetition("Save the Planet", "A petition to save the Earth.");
+        petitionService.createPetition("Protect the Planet", "A petition to protect the Earth.");
+
+        // Act
+        List<Petition> results = petitionService.searchPetitionByTitle("planet");
+
+        // Assert
+        assertEquals(2, results.size(), "There should be two petitions matching the substring 'planet' case-insensitively.");
+        assertTrue(results.stream().anyMatch(p -> p.getTitle().equals("Save the Planet")),
+                "The 'Save the Planet' petition should match.");
+        assertTrue(results.stream().anyMatch(p -> p.getTitle().equals("Protect the Planet")),
+                "The 'Protect the Planet' petition should match.");
+    }
+
+    @Test
+    void testSearchPetitionByTitle_NoMatch() {
+        // Arrange
+        petitionService.createPetition("Save the Tigers", "A petition to protect tigers.");
+
+        // Act
+        List<Petition> results = petitionService.searchPetitionByTitle("Lions");
+
+        // Assert
+        assertTrue(results.isEmpty(), "There should be no petitions matching the substring 'Lions'.");
+    }
 }
