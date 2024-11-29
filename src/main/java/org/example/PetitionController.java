@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/petitions")
 public class PetitionController {
@@ -73,8 +75,8 @@ public class PetitionController {
     // Search petition by title
     @GetMapping("/search-result")
     public String searchPetition(@RequestParam String title, Model model) {
-        Petition petition = petitionService.searchPetitionByTitle(title);
-        model.addAttribute("petition", petition);
-        return "petition/result";
+        List<Petition> petitions = petitionService.searchPetitionByTitle(title); // Fetch matching petitions
+        model.addAttribute("petitions", petitions); // Add them to the model
+        return "petition/result"; // Forward to the results page
     }
 }

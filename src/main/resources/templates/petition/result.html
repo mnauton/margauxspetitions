@@ -5,12 +5,19 @@
 </head>
 <body>
 <h1>Search Results</h1>
-<div th:if="${petition != null}">
-    <p><strong>Title:</strong> <span th:text="${petition.title}"></span></p>
-    <a th:href="@{/petitions/{id}(id=${petition.id})}">View and Sign Petition</a>
+<div th:if="${petitions != null && !petitions.isEmpty()}">
+    <ul>
+        <li th:each="petition : ${petitions}">
+            <p>
+                <strong>Title:</strong> <span th:text="${petition.title}"></span><br>
+                <strong>Description:</strong> <span th:text="${petition.description}"></span><br>
+                <a th:href="@{/petitions/{id}(id=${petition.id})}">View and Sign Petition</a>
+            </p>
+        </li>
+    </ul>
 </div>
-<div th:if="${petition == null}">
-    <p>No petition found with the given title.</p>
+<div th:if="${petitions == null || petitions.isEmpty()}">
+    <p>No petitions found with the given title.</p>
 </div>
 <a href="/petitions/all">Back to All Petitions</a>
 <a href="/petitions/search">Back to Search</a>

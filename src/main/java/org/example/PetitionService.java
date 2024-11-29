@@ -28,11 +28,10 @@ public class PetitionService {
     }
 
     // Search for a petition by title
-    public Petition searchPetitionByTitle(String title) {
+    public List<Petition> searchPetitionByTitle(String title) {
         return petitions.stream()
-                .filter(p -> p.getTitle().equalsIgnoreCase(title))
-                .findFirst()
-                .orElse(null);
+                .filter(p -> p.getTitle().toLowerCase().contains(title.toLowerCase()))
+                .toList(); // Converts the Stream to a List
     }
 
     // Get a specific petition by ID
