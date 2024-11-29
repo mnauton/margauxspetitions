@@ -14,10 +14,15 @@ public class PetitionService {
         this.petitions = new ArrayList<>();
     }
 
-    // Add a new petition
     public void createPetition(String title, String description) {
+        // Check if a petition with the same title already exists
+        boolean titleExists = petitions.stream().anyMatch(p -> p.getTitle().equalsIgnoreCase(title));
+        if (titleExists) {
+            throw new IllegalArgumentException("A petition with this title already exists.");
+        }
         petitions.add(new Petition(title, description));
     }
+
 
     // Get all petitions
     public List<Petition> getAllPetitions() {
