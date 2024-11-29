@@ -16,6 +16,9 @@ public class PetitionService {
 
     // Add a new petition
     public void createPetition(String title, String description) {
+        if (petitions.stream().anyMatch(p -> p.getTitle().equalsIgnoreCase(title))) {
+            throw new IllegalArgumentException("A petition with this title already exists.");
+        }
         petitions.add(new Petition(title, description));
     }
 

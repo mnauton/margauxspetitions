@@ -38,10 +38,16 @@ public class PetitionController {
 
     // Create a Petition
     @PostMapping("/create")
-    public String createPetition(@RequestParam String title, @RequestParam String description) {
-        petitionService.createPetition(title, description);
-        return "redirect:/petitions/all";
+    public String createPetition(@RequestParam String title, @RequestParam String description, Model model) {
+        try {
+            petitionService.createPetition(title, description);
+            return "redirect:/petitions/all";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+            return "petition/create";
+        }
     }
+
 
     // View a specific petition by ID
     @GetMapping("/{id}")
