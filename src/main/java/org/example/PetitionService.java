@@ -16,9 +16,6 @@ public class PetitionService {
 
     // Add a new petition
     public void createPetition(String title, String description) {
-        if (petitions.stream().anyMatch(p -> p.getTitle().equalsIgnoreCase(title))) {
-            throw new IllegalArgumentException("A petition with this title already exists.");
-        }
         petitions.add(new Petition(title, description));
     }
 
@@ -27,11 +24,11 @@ public class PetitionService {
         return petitions;
     }
 
-    // Search for a petition by title
+    // Search for a petition by title (case-insensitive substring match)
     public List<Petition> searchPetitionByTitle(String title) {
         return petitions.stream()
                 .filter(p -> p.getTitle().toLowerCase().contains(title.toLowerCase()))
-                .toList(); // Converts the Stream to a List
+                .toList();
     }
 
     // Get a specific petition by ID
@@ -46,7 +43,7 @@ public class PetitionService {
     public void signPetition(int id, String name, String email) {
         Petition petition = getPetitionById(id);
         if (petition != null) {
-            petition.addSignature(name, email);
+            petition.addSignature(new Signature(name, email));
         }
     }
 }

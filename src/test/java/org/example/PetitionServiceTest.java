@@ -107,8 +107,11 @@ class PetitionServiceTest {
 
         // Assert
         assertEquals(1, petition.getSignatures().size(), "There should be one signature.");
-        assertEquals("John Doe (john.doe@example.com)", petition.getSignatures().get(0), "The signature name should match.");
+        Signature signature = petition.getSignatures().get(0);
+        assertEquals("John Doe", signature.getName(), "The signature name should match.");
+        assertEquals("john.doe@example.com", signature.getEmail(), "The signature email should match.");
     }
+
 
     @Test
     void testCreatePetitionWithDuplicateTitle_ThrowsException() {

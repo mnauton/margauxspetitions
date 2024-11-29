@@ -8,7 +8,7 @@ public class Petition {
     private final int id; // Unique ID for each petition
     private String title;
     private String description;
-    private final List<String> signatures; // List of signatures (Name + Email)
+    private final List<Signature> signatures;
 
     public Petition(String title, String description) {
         this.id = idCounter++;
@@ -37,11 +37,11 @@ public class Petition {
         this.description = description;
     }
 
-    public List<String> getSignatures() {
+    public List<Signature> getSignatures() {
         return signatures;
     }
 
-    public void addSignature(String name, String email) {
-        signatures.add(name + " (" + email + ")");
+    public void addSignature(Signature signature) {
+        signatures.add(signature);
     }
 }
