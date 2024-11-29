@@ -107,4 +107,41 @@ class PetitionServiceTest {
         assertEquals(1, petition.getSignatures().size(), "There should be one signature.");
         assertEquals("John Doe (john.doe@example.com)", petition.getSignatures().get(0), "The signature name should match.");
     }
+
+    @Test
+    void testCreatePetitionWithDuplicateTitle_ThrowsException() {
+        // Arrange
+        String title = "Save the Trees";
+        String description1 = "A petition to save trees in our city park.";
+        String description2 = "A different petition with the same title.";
+
+        petitionService.createPetition(title, description1);
+
+        // Act and Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            petitionService.createPetition(title, description2);
+        });
+
+        assertEquals("A petition with this title already exists.", exception.getMessage(),
+                "Exception message should indicate a duplicate title.");
+    }
+
+    @Test
+    void testCreatePetitionWithUniqueTitle_Succeeds() {
+        // Arrange
+        String title1 = "Save the Trees";
+        String description1 = "A petition to save trees in our city park.";
+        String title2 = "Protect the Wetlands";
+        String description2 = "A petition to protect our wetlands.";
+
+        // Act
+        petitionService.createPetition(title1, description1);
+        petitionService.createPetition(title2, description2);
+
+        // Assert
+        assertEquals(2, petitionService.getAllPetitions().size(), "Both petitions should be added successfully.");
+        assertEquals(title1, petitionService.getAllPetitions().get(0).getTitle(), "First title should match.");
+        assertEquals(title2, petitionService.getAllPetitions().get(1).getTitle(), "Second title should match.");
+    }
+
 }
