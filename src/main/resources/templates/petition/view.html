@@ -26,6 +26,6 @@
 <div th:if="${petition == null}">
     <p>Petition not found.</p>
 </div>
-<a href="/petitions/all">Back to All Petitions</a>
+<a th:href="@{/petitions/all}">Back to all petitions</a>
 </body>
 </html>

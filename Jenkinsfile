@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    parameters {
-        string(name: 'USERNAME', defaultValue: '', description: 'Username for deployment')
-    }
-
     stages {
         stage('GetProject') {
             steps {

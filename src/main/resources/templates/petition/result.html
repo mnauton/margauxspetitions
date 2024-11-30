@@ -19,7 +19,7 @@
 <div th:if="${petitions == null || petitions.isEmpty()}">
     <p>No petitions found with the given title.</p>
 </div>
-<a href="/petitions/all">Back to All Petitions</a>
-<a href="/petitions/search">Back to Search</a>
+<a th:href="@{/petitions/all}">Back to all petitions</a>
+<a th:href="@{/petitions/search}">Back to Search</a>
 </body>
 </html>
